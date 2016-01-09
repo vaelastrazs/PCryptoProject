@@ -40,7 +40,7 @@ public class Server extends Thread {
 		int array5[] = new int[5];
 		// int array5 [] = new int [5];
 		// int array5[] = { 51, 39, 49, 48, 50 };
-		// int array5[] = {39,48,49,50,51}; //quinte flush royale
+		// int array5[] = {47,48,49,50,51}; //quinte flush royale
 		// int array5[] = {1,2,3,4,5}; //quite flush
 		// int array5[] = {0,14,28,42,43}; //suite
 		// int array5[] = {6,19,32,45,10}; //carre

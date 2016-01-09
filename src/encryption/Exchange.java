@@ -100,10 +100,10 @@ public class Exchange {
 		// Step 2 : Bob <----- Alice : Alice won't pick randomly here.
 		//First she get the jacobi symbol of the plaintext card
 		System.out.println("Jacobi Symbol of the plaintext cards");
-		//alice.jacobiSymbolCards();
+		alice.jacobiSymbolCards();
 		//Then she get the one of the encrypted card and compare.
 		System.out.println("Jacobi Symbol of the ciphered cards");
-		//alice.jacobiSymbolEcards();
+		alice.jacobiSymbolEcards();
 
 		//System.out.println("Example jacobi symbol " + alice.jacobiCalcul( BigInteger.valueOf(11),  9));
 

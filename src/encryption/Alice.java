@@ -142,7 +142,10 @@ public class Alice {
 	// calculer
 	// le symbol de jacobi
 	public int jacobiCalcul(BigInteger p, int i) {
-		return (Integer) null;
+		BigInteger pow = BigInteger.valueOf((p.intValue()-1)/2);
+		BigInteger j = BigInteger.valueOf(i).pow(pow.intValue());
+		j = j.mod(p);
+		return j.intValue();
 	}
 	
 	//Simple parcours, rien a completer
@@ -156,7 +159,7 @@ public class Alice {
 		// print de l'array de base pour debug
 		Various.printArray(cards);
 		for (int i = 0; i < cards.length; i++) {
-			jacobi[i] = jacobiCalcul(p, i);
+			jacobi[i] = jacobiCalcul(p, cards[i]);
 			// print du symbole de jacobi calculé pour debug
 			System.out.print(jacobi[i] + " ");
 		}
@@ -171,7 +174,7 @@ public class Alice {
 		Various.printBarray(eCards);
 
 		for (int i = 0; i < eCards.length; i++) {
-			jacobi[i] = jacobiCalcul(p, i);
+			jacobi[i] = jacobiCalcul(p, eCards[i].intValue());
 			// print du symbole de jacobi calculé
 			System.out.print(jacobi[i] + " ");
 		}
