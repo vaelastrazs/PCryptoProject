@@ -1,0 +1,237 @@
+package poker;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import Listeners.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
+public class GUI_Poker extends JFrame implements ActionListener {
+   private final int HT = 600;
+   private final int LG = 800;
+   private Player p;
+   
+   private static BufferedImage background, alice, bob, card1, card2, card3, card4, card5;
+   private static JPanel wordnbutton, words, buttons, pass, follow, relance, min, halfpot, pot, max;
+   private static JMenuBar menuBar;
+   private static JMenuItem partie, option, jouer, regles, scores, quitter, aide, apropos;
+   private static JLabel card_1, card_2, card_3, card_4, card_5;
+   private static Image dcard1, dcard2, dcard3, dcard4, dcard5;
+   private static JPanel imagePanel, playerboard, adverseboard;
+   
+   /*******Fin Cards**************/
+            
+   //Initialise le menu
+   private void initMenu() throws IOException{
+	   BufferedImage background = ImageIO.read(new File("images/poker-table.png"));
+	   Image dbackground = background.getScaledInstance( LG, HT-100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel imagePanel = new JLabel(new ImageIcon(dbackground));
+	   
+	   BufferedImage alice = ImageIO.read(new File("images/alice_poker.png"));
+	   Image dalice = alice.getScaledInstance( 180, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel adverseboard = new JLabel(new ImageIcon(dalice));
+	   
+	   BufferedImage bob = ImageIO.read(new File("images/bob_card.jpg"));
+	   Image dbob = bob.getScaledInstance( 180, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel playerboard = new JLabel(new ImageIcon(dbob));
+	   
+	   /**********Cards**************/
+	   BufferedImage card1 = ImageIO.read(new File("images/carte-poker.jpg"));
+	   Image dcard1 = card1.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel card_1 = new JLabel(new ImageIcon(dcard1));
+	   
+	   BufferedImage card2 = ImageIO.read(new File("images/carte-poker.jpg"));
+	   Image dcard2 = card2.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel card_2 = new JLabel(new ImageIcon(dcard2));
+	   
+	   BufferedImage card3 = ImageIO.read(new File("images/carte-poker.jpg"));
+	   Image dcard3 = card3.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel card_3 = new JLabel(new ImageIcon(dcard3));
+	   
+	   BufferedImage card4 = ImageIO.read(new File("images/carte-poker.jpg"));
+	   Image dcard4 = card4.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel card_4 = new JLabel(new ImageIcon(dcard4));
+	   
+	   BufferedImage card5 = ImageIO.read(new File("images/carte-poker.jpg"));
+	   Image dcard5 = card5.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
+	   JLabel card_5 = new JLabel(new ImageIcon(dcard5));
+
+	   JPanel wordnbutton = new JPanel();
+	   JPanel words = new JPanel();
+	   JPanel buttons = new JPanel();
+
+	   JButton pass = new JButton("Pass");
+	   JButton follow = new JButton("Follow");
+	   JButton relance = new JButton("Relance");
+	   
+	   JButton min = new JButton("Min.");
+	   JButton halfpot = new JButton("1/2");
+	   JButton pot = new JButton("Pot");
+	   JButton max = new JButton("Max");
+	   
+	   /********************Menu***********************/
+	      JMenuBar menuBar = new JMenuBar();
+	         JMenu   partie = new JMenu("Partie"),
+	                        option = new JMenu("?");
+
+	         JMenuItem jouer = new JMenuItem("Nouvelle partie");
+	         JMenuItem regles = new JMenuItem("Regles");
+	         JMenuItem scores = new JMenuItem("Scores");
+	         JMenuItem quitter = new JMenuItem("Quitter");
+	         JMenuItem aide = new JMenuItem("Afficher l'aide");
+	         JMenuItem apropos = new JMenuItem("A propos du Poker");
+
+	     jouer.addActionListener(ListenerNewGame.getInstance());
+	     regles.addActionListener(ListenerRules.getInstance());
+	     scores.addActionListener(ListenerScore.getInstance());
+	     quitter.addActionListener(ListenerQuit.getInstance());
+	     aide.addActionListener(ListenerHelp.getInstance());
+	     apropos.addActionListener(ListenerAboutPoker.getInstance());
+	      
+	     jouer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+	     quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK));
+	      
+	     partie.add(jouer);
+	     partie.addSeparator();
+	
+	     partie.add(regles);
+	
+	     partie.addSeparator();
+	     partie.add(scores);
+	
+	     partie.addSeparator();
+	     partie.add(quitter);
+	     partie.setMnemonic('F');
+	
+	     option.add(aide);
+	     option.addSeparator();
+	
+	     option.add(apropos);
+	     option.setMnemonic('E');
+	
+	     menuBar.add(partie);
+	     menuBar.add(option);
+
+	     this.setJMenuBar(menuBar);
+	     
+	     min.addActionListener(ListenerMinMoney.getInstance());
+		 halfpot.addActionListener(ListenerHalfMoney.getInstance());
+		 pot.addActionListener(ListenerPot.getInstance());
+		 max.addActionListener(ListenerMaxMoney.getInstance());
+		 pass.addActionListener(ListenerPasser.getInstance());
+		 follow.addActionListener(ListenerFollow.getInstance());
+		 relance.addActionListener(ListenerMiser.getInstance());
+   }
+   /*
+   public void initListeners(){
+	   min.addActionListener(ListenerMinMoney.getInstance());
+	   halfpot.addActionListener(ListenerHalfMoney.getInstance());
+	   pot.addActionListener(ListenerPot.getInstance());
+	   max.addActionListener(ListenerMaxMoney.getInstance());
+	   pass.addActionListener(ListenerPasser.getInstance());
+	   follow.addActionListener(ListenerFollow.getInstance());
+	   relance.addActionListener(ListenerMiser.getInstance());
+   }
+   */
+   private void build() throws IOException{
+       /**
+       *On initialise l'interface graphique
+       *On choisit l'emplacement composants de l'interface dans la fenetre
+       */  	   	   
+	   	   this.setTitle("Mental Poker"); //On donne un titre à l'application
+           imagePanel.setLayout(null);
+           playerboard.setLayout(null);
+           adverseboard.setLayout(null);
+           
+           this.setResizable(false); //On permet le redimensionnement
+           this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
+           
+           initMenu();  //On initialise le menu
+           
+           //this.initListeners(); //On initialise les Listeners
+           buttons.setBorder(BorderFactory.createLineBorder(Color.RED));
+           words.setBorder(BorderFactory.createLineBorder(Color.RED));
+           wordnbutton.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+           playerboard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           adverseboard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           wordnbutton.setBackground(Color.orange);
+           
+           //card_1.setPreferredSize(new Dimension(175, 100));           
+           card_1.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           card_2.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           card_3.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           card_4.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           card_5.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+           
+           /***Placement des cards dans le container***/
+           card_1.setBounds(80, 190, 100, 100);
+           card_2.setBounds(215, 190, 100, 100);
+           card_3.setBounds(350, 190, 100, 100);
+           card_4.setBounds(482, 190, 100, 100);
+           card_5.setBounds(615, 190, 100, 100);
+           /******Fin placement cards*********/
+           
+           wordnbutton.setBounds(LG-275, HT-178, LG-530, 150);
+           playerboard.setBounds(LG/2 - 100, HT-201, 170, 150 );
+           adverseboard.setBounds(LG/2 - 110, 0, 170, 150 );
+          
+           buttons.add(pass);
+           buttons.add(follow);
+           buttons.add(relance);
+           
+           words.add(min);
+           words.add(halfpot);
+           words.add(pot);
+           words.add(max);
+           
+           wordnbutton.add(words, BorderLayout.NORTH);        
+           wordnbutton.add(buttons, BorderLayout.SOUTH);
+           
+           imagePanel.add(adverseboard);
+           imagePanel.add(playerboard);
+           imagePanel.add(wordnbutton);
+           imagePanel.add(card_1);
+           imagePanel.add(card_2);
+           imagePanel.add(card_3);
+           imagePanel.add(card_4);
+           imagePanel.add(card_5);
+           
+           this.setBackground(Color.DARK_GRAY);
+           //On prévient notre JFrame que notre JPanel sera son content pane
+           this.setContentPane(imagePanel);
+           
+           pack();
+           setSize(LG,HT); //On donne une taille à notre fenêtre
+           setLocationByPlatform(true);
+           setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
+           setVisible(true);
+   }
+         
+   public GUI_Poker() throws IOException {
+      //super("Poker");
+      WindowListener l = new WindowAdapter() {
+         public void windowClosing(WindowEvent e){
+            System.exit(0);
+         }
+      };
+      
+      addWindowListener(l);
+      //initMenu();  //On initialise le menu
+      this.build();
+   }
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+}
+
+
+}

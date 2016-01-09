@@ -1,0 +1,26 @@
+Compile client and server : javac *.java
+
+Compiler pour obtenir les .class:
+On se place dans le dossier PokerGame/src:
+On saisie la commande:
+javac -Xlint Listeners/*.java poker/*.java (4 warnings)
+
+//On envoie tous nos point class dans le dossier build
+//On spécifie le dossier build dans le classpath à cause des dépendances dans le package poker 
+//Notez qu'il faut se placer dans le dossier contenant les .java qu'on veut compiler
+javac -d C:\Users\Fabrice\workspace\PojectCli-Serv\build -Xlint -classpath C:\Users\Fabrice\workspace\PojectCli-Serv\build *.java
+
+Cette commande compile les 2 dossiers en même temps et met les .class dans build
+javac -d C:\Users\Fabrice\workspace\PojectCli-Serv\build -Xlint -classpath C:\Users\Fabrice\workspace\PojectCli-Serv\build C:\Users\Fabrice\workspace\PojectCli-Serv\src\Listeners\*.java C:\Users\Fabrice\workspace\PojectCli-Serv\src\poker\*.java
+
+and then start server as follows:
+
+$ java Server 6066
+Waiting for client on port 6066...
+Check client program as follows:
+
+$ java Client localhost 6066
+Connecting to localhost on port 6066
+Just connected to localhost/127.0.0.1:6066
+Server says Thank you for connecting to /127.0.0.1:6066
+Goodbye!
