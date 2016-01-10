@@ -97,7 +97,7 @@ public class Exchange {
 
 		System.out.println("");
 		
-		for (int i = 0 ; i < 29; i++){
+		for (int i = 0 ; i < Alice.divisor.length; i++){
 			alice.jacobiSymbolCardsCheat(i);
 			alice.jacobiSymbolEcardsCheat(i);
 		}

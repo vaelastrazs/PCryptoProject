@@ -10,12 +10,15 @@ public class Alice {
 	private BigInteger encipherKey;
 	private BigInteger decipherKey;
 	private int[] cards = new int[52];
-	private int[][] jacobisClair  = new int[40][52];
-	private int[][] jacobisChiffrer = new int[40][52];
+	private int[][] jacobisClair  = new int[46][52];
+	private int[][] jacobisChiffrer = new int[46][52];
 	
-	private int[] divisor = {2,3,5,6,7,9,10,13,14,15,
+	public static int[] divisor = {
+			2,3,5,6,7,9,10,13,14,15,
 			18,21,26,30,35,39,42,45,63,
-			65,70,78,90,91,105,117,126,130,182};
+			65,70,78,90,91,105,117,126,130,182,
+			195,210,234,273,315,390,455,546,585,630,819,910,
+			1170,1365,1338,2730,4095};
 		/*	
 	private int[] divisor = {2,12007,1,1,1,1,1,13,14,15,
 			18,21,26,30,35,39,42,45,63,
@@ -24,6 +27,7 @@ public class Alice {
 	private BigInteger[] eCards = new BigInteger[52];
 
 	public Alice(BigInteger p2) {
+		System.out.println(divisor.length);
 		this.p = p2;
 		this.phi = p.subtract(BigInteger.ONE);
 	}
@@ -185,7 +189,7 @@ public class Alice {
 				String sjacobi = "J ";
 				for (int j = 0 ; j < 13 ; j++){
 					
-					scards = scards+"|"+formaterCentrer(eCards[i*13+j].intValue(),25);
+					scards = scards+"|"+formaterCentrer(eCards[i*13+j].intValue(),divisor.length);
 					sjacobi = sjacobi+"|"+methodeESale(i*13+j);
 				}
 					
@@ -203,7 +207,7 @@ public class Alice {
 				String sjacobi = "J ";
 				for (int j = 0 ; j < 13 ; j++){
 					
-					scards = scards+"|"+formaterCentrer(cards[i*13+j],25);
+					scards = scards+"|"+formaterCentrer(cards[i*13+j],divisor.length);
 					sjacobi = sjacobi+"|"+methodeSale(i*13+j);
 				}
 					
@@ -215,7 +219,7 @@ public class Alice {
 
 		private String methodeESale(int j) {
 			String s= "";
-				for (int i = 0; i < 25 ; i++){
+				for (int i = 0; i < divisor.length ; i++){
 					if (jacobisChiffrer[i][j] == 1)
 						s+="1";
 					else if (jacobisClair[i][j] == 0)
@@ -228,7 +232,7 @@ public class Alice {
 
 	private String methodeSale(int j) {
 		String s= "";
-			for (int i = 0; i < 25 ; i++){
+			for (int i = 0; i < divisor.length ; i++){
 				if (jacobisClair[i][j] == 1)
 					s+="1";
 				else if (jacobisClair[i][j] == 0)
