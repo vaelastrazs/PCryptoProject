@@ -31,7 +31,7 @@ public class Exchange {
 
 		// Normal Game
 		// Step 1 : Bob -----> Alice
-		bob.shuffle();
+		//bob.shuffle();
 		System.out.println("Post Bob shuffle : ");
 		bob.printCardsArray();
 		// Encrypted Cards
@@ -45,7 +45,7 @@ public class Exchange {
 		System.out.println("");
 
 		// Step 2 : Bob <----- Alice
-		alice.shuffle();
+		//alice.shuffle();
 		System.out.println("Alice pick her five cards ");
 		BigInteger[] aliceCardsB = alice.randomPick();
 		Various.printBarray(aliceCardsB);
@@ -101,11 +101,20 @@ public class Exchange {
 		//First she get the jacobi symbol of the plaintext card
 		System.out.println("Jacobi Symbol of the plaintext cards");
 		alice.jacobiSymbolCards();
+		alice.printJacobiCardsArray();
 		//Then she get the one of the encrypted card and compare.
 		System.out.println("Jacobi Symbol of the ciphered cards");
 		alice.jacobiSymbolEcards();
+		alice.printJacobiEcardsArray();
 
 		//System.out.println("Example jacobi symbol " + alice.jacobiCalcul( BigInteger.valueOf(11),  9));
+		System.out.println("Jacobi Symbol of the plaintext cards");
+		alice.jacobiSymbolCardsCheat();
+		alice.printJacobiCardsArray();
+		//Then she get the one of the encrypted card and compare.
+		System.out.println("Jacobi Symbol of the ciphered cards");
+		alice.jacobiSymbolEcardsCheat();
+		alice.printJacobiEcardsArray();
 
 	}
 
