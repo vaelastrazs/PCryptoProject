@@ -96,26 +96,57 @@ public class Exchange {
 		bob.send(alice, eCards);
 
 		System.out.println("");
+		
+		for (int i = 0 ; i < 29; i++){
+			alice.jacobiSymbolCardsCheat(i);
+			alice.jacobiSymbolEcardsCheat(i);
+		}
+		
+		alice.printJacobiCardsCheat();
+		System.out.println();
+		alice.printJacobiEcardsCheat();
+		
+		/*
 
 		// Step 2 : Bob <----- Alice : Alice won't pick randomly here.
 		//First she get the jacobi symbol of the plaintext card
 		System.out.println("Jacobi Symbol of the plaintext cards");
 		alice.jacobiSymbolCards();
-		alice.printJacobiCardsArray();
+		alice.printJacobiCardsArray(0);
 		//Then she get the one of the encrypted card and compare.
 		System.out.println("Jacobi Symbol of the ciphered cards");
 		alice.jacobiSymbolEcards();
-		alice.printJacobiEcardsArray();
+		alice.printJacobiEcardsArray(0);
 
+	
+		 //System.out.println("Example jacobi symbol " + alice.jacobiCalcul( BigInteger.valueOf(11),  9));
+	
+		System.out.println("################### 35 ##################");
+		alice.jacobiSymbolCardsCheat(35);
+		
+		//Then she get the one of the encrypted card and compare.
+		System.out.println();
+		alice.jacobiSymbolEcardsCheat(35);
+		alice.printJacobiEcardsArray();
+		
 		//System.out.println("Example jacobi symbol " + alice.jacobiCalcul( BigInteger.valueOf(11),  9));
-		System.out.println("Jacobi Symbol of the plaintext cards");
-		alice.jacobiSymbolCardsCheat();
+				System.out.println("################### 39 ##################");
+				alice.jacobiSymbolCardsCheat(39);
+				alice.printJacobiCardsArray();
+				//Then she get the one of the encrypted card and compare.
+				System.out.println();
+				alice.jacobiSymbolEcardsCheat(39);
+				alice.printJacobiEcardsArray();
+				//System.out.println("Example jacobi symbol " + alice.jacobiCalcul( BigInteger.valueOf(11),  9));
+		
+		System.out.println("################### 126 ##################");
+		alice.jacobiSymbolCardsCheat(126);
 		alice.printJacobiCardsArray();
 		//Then she get the one of the encrypted card and compare.
-		System.out.println("Jacobi Symbol of the ciphered cards");
-		alice.jacobiSymbolEcardsCheat();
+		System.out.println();
+		alice.jacobiSymbolEcardsCheat(126);
 		alice.printJacobiEcardsArray();
-
+	 */
 	}
 
 }

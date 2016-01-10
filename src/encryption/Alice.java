@@ -10,8 +10,17 @@ public class Alice {
 	private BigInteger encipherKey;
 	private BigInteger decipherKey;
 	private int[] cards = new int[52];
-	private int[] jacobiClair = new int[52];
-	private int[] jacobiChiffrer = new int[52];
+	private int[][] jacobisClair  = new int[40][52];
+	private int[][] jacobisChiffrer = new int[40][52];
+	
+	private int[] divisor = {2,3,5,6,7,9,10,13,14,15,
+			18,21,26,30,35,39,42,45,63,
+			65,70,78,90,91,105,117,126,130,182};
+		/*	
+	private int[] divisor = {2,12007,1,1,1,1,1,13,14,15,
+			18,21,26,30,35,39,42,45,63,
+			65,70,78,90,91,105,117,126,130,182};
+			*/
 	private BigInteger[] eCards = new BigInteger[52];
 
 	public Alice(BigInteger p2) {
@@ -131,7 +140,7 @@ public class Alice {
 	*/
 
 	// For debug
-	public void printJacobiCardsArray() {
+	public void printJacobiCardsArray(int n) {
 
 		int unicodes[] = {0x2665, 0x2666, 0x2663, 0x2660};
 		for (int i = 0; i < 4; i++) {
@@ -140,7 +149,7 @@ public class Alice {
 			for (int j = 0 ; j < 13 ; j++){
 				
 				scards = scards+"|"+formaterCentrer(cards[i*13+j],5);
-				sjacobi = sjacobi+"|"+formaterCentrer(jacobiClair[i*13+j],5);
+				sjacobi = sjacobi+"|"+formaterCentrer(jacobisClair[n][i*13+j],5);
 			}
 				
 			System.out.println(scards + "|");
@@ -150,7 +159,7 @@ public class Alice {
 	}
 	
 	// For debug
-		public void printJacobiEcardsArray() {
+		public void printJacobiEcardsArray(int n) {
 
 			int unicodes[] = {0x2665, 0x2666, 0x2663, 0x2660};
 			for (int i = 0; i < 4; i++) {
@@ -159,7 +168,43 @@ public class Alice {
 				for (int j = 0 ; j < 13 ; j++){
 					
 					scards = scards+"|"+formaterCentrer(eCards[i*13+j].intValue(),5);
-					sjacobi = sjacobi+"|"+formaterCentrer(jacobiChiffrer[i*13+j],5);
+					sjacobi = sjacobi+"|"+formaterCentrer(jacobisChiffrer[n][i*13+j],5);
+				}
+					
+				System.out.println(scards + "|");
+				System.out.println(sjacobi + "|");
+				System.out.println("-------------------------------------------------------------------------------");
+			}
+		}
+		
+		public void printJacobiEcardsCheat() {
+
+			int unicodes[] = {0x2665, 0x2666, 0x2663, 0x2660};
+			for (int i = 0; i < 4; i++) {
+				String scards = Character.toString((char)unicodes[i])+" ";
+				String sjacobi = "J ";
+				for (int j = 0 ; j < 13 ; j++){
+					
+					scards = scards+"|"+formaterCentrer(eCards[i*13+j].intValue(),25);
+					sjacobi = sjacobi+"|"+methodeESale(i*13+j);
+				}
+					
+				System.out.println(scards + "|");
+				System.out.println(sjacobi + "|");
+				System.out.println("-------------------------------------------------------------------------------");
+			}
+		}
+		
+		public void printJacobiCardsCheat() {
+
+			int unicodes[] = {0x2665, 0x2666, 0x2663, 0x2660};
+			for (int i = 0; i < 4; i++) {
+				String scards = Character.toString((char)unicodes[i])+" ";
+				String sjacobi = "J ";
+				for (int j = 0 ; j < 13 ; j++){
+					
+					scards = scards+"|"+formaterCentrer(cards[i*13+j],25);
+					sjacobi = sjacobi+"|"+methodeSale(i*13+j);
 				}
 					
 				System.out.println(scards + "|");
@@ -168,6 +213,31 @@ public class Alice {
 			}
 		}
 
+		private String methodeESale(int j) {
+			String s= "";
+				for (int i = 0; i < 25 ; i++){
+					if (jacobisChiffrer[i][j] == 1)
+						s+="1";
+					else if (jacobisClair[i][j] == 0)
+						s+="0";
+					else
+						s+="-";
+				}
+				return s;
+			}
+
+	private String methodeSale(int j) {
+		String s= "";
+			for (int i = 0; i < 25 ; i++){
+				if (jacobisClair[i][j] == 1)
+					s+="1";
+				else if (jacobisClair[i][j] == 0)
+					s+="0";
+				else
+					s+="-";
+			}
+			return s;
+		}
 
 	private String formaterCentrer(int i, int tailleMax) {
 		String s = String.valueOf(i);
@@ -222,15 +292,15 @@ public class Alice {
 		// Initialisation des 52 cartes(carte 1 : 1, carte 2 : 2 ect...)
 		Various.init(cards);
 		for (int i = 0; i < cards.length; i++) {
-			jacobiClair[i] = jacobiCalcul(p, cards[i]);
+			jacobisClair[0][i] = jacobiCalcul(p, cards[i]);
 		}
 	}
 	
-	public void jacobiSymbolCardsCheat() {
+	public void jacobiSymbolCardsCheat(int n) {
 		// Initialisation des 52 cartes(carte 1 : 1, carte 2 : 2 ect...)
 		Various.init(cards);
 		for (int i = 0; i < cards.length; i++) {
-			jacobiClair[i] = jacobiCalcul(p, 3, cards[i]);
+			jacobisClair[n][i] = jacobiCalcul(p, divisor[n], cards[i]);
 		}
 		System.out.println("");
 	}
@@ -241,15 +311,14 @@ public class Alice {
 	public void jacobiSymbolEcards() {
 
 		for (int i = 0; i < eCards.length; i++) {
-			jacobiChiffrer[i] = jacobiCalcul(p, eCards[i].intValue());
+			jacobisChiffrer[0][i] = jacobiCalcul(p, eCards[i].intValue());
 		}
 		System.out.println("");
 	}
 	
-	public void jacobiSymbolEcardsCheat() {
+	public void jacobiSymbolEcardsCheat(int n) {
 		for (int i = 0; i < eCards.length; i++) {
-			jacobiChiffrer[i] = jacobiCalcul(p, 3, eCards[i].intValue());
+			jacobisChiffrer[n][i] = jacobiCalcul(p, divisor[n], eCards[i].intValue());
 		}
-		System.out.println(phi.divide(BigInteger.valueOf(2)).intValue());
 	}
 }
