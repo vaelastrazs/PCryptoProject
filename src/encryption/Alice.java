@@ -145,6 +145,7 @@ public class Alice {
 		BigInteger pow = BigInteger.valueOf((p.intValue()-1)/2);
 		BigInteger j = BigInteger.valueOf(i).pow(pow.intValue());
 		j = j.mod(p);
+        if (j.compareTo(new BigInteger("1"))==1) j = BigInteger.valueOf(j.longValue() - p.longValue()); //pour avoir j = {-1,0,1}
 		return j.intValue();
 	}
 	
