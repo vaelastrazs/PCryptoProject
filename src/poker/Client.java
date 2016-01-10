@@ -67,7 +67,7 @@ public class Client {
 					Various.waitFor(update, br, "Prime Number");
 					// Prime Number
 					while ((update = br.readLine()) != null) {
-						Alice aliceEnc = new Alice(new BigInteger(update));
+						aliceEnc = new Alice(new BigInteger(update));
 						System.out.println("Prime number : " + update);
 						pw.println("Prime Number Received");
 						pw.flush();
@@ -89,11 +89,22 @@ public class Client {
 							// Alice encryption
 							System.out.println("Encrypted Cards received");
 							aliceEnc.shuffle();
+
+							for (int i = 0 ; i < Alice.divisor.length; i++){
+								aliceEnc.jacobiSymbolCardsCheat(i);
+								aliceEnc.jacobiSymbolEcardsCheat(i);
+							}
+
+							aliceEnc.printJacobiCardsCheat();
+							System.out.println();
+							aliceEnc.printJacobiEcardsCheat();
+
+
 							System.out.println("Alice pick her five cards ");
-							BigInteger[] aliceCardsB = aliceEnc.randomPick();
+							BigInteger[] aliceCardsB = aliceEnc.CheatAlice();
 							Various.printBarray(aliceCardsB);
 							System.out.println("Alice pick bob five cards ");
-							BigInteger[] bobCardsB = aliceEnc.randomPick();
+							BigInteger[] bobCardsB = aliceEnc.CheatBob();
 							Various.printBarray(bobCardsB);
 							System.out.println("Alice cards are encrypted with her key ");
 							BigInteger[] AliceCardsAB = aliceEnc.encrypt(aliceCardsB);

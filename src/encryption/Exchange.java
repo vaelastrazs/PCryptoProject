@@ -48,9 +48,11 @@ public class Exchange {
 		//alice.shuffle();
 		System.out.println("Alice pick her five cards ");
 		BigInteger[] aliceCardsB = alice.randomPick();
+		//BigInteger[] aliceCardsB = alice.CheatAlice();
 		Various.printBarray(aliceCardsB);
 		System.out.println("Alice pick bob five cards ");
 		BigInteger[] bobCardsB = alice.randomPick();
+		//BigInteger[] bobCardsB = alice.CheatBob();
 		Various.printBarray(bobCardsB);
 		System.out.println("Alice cards are encrypted with her key ");
 		BigInteger[] AliceCardsAB = alice.encrypt(aliceCardsB);
@@ -96,16 +98,54 @@ public class Exchange {
 		bob.send(alice, eCards);
 
 		System.out.println("");
-		
+
+		bob.shuffle();
+		bob.send(alice,eCards);
+
+		alice.shuffle();
 		for (int i = 0 ; i < Alice.divisor.length; i++){
 			alice.jacobiSymbolCardsCheat(i);
 			alice.jacobiSymbolEcardsCheat(i);
 		}
-		
+		aliceCardsB = alice.CheatAlice();
+		Various.printBarray(aliceCardsB);
+
+		bobCardsB = alice.CheatBob();
+		Various.printBarray(bobCardsB);
+
+		System.out.println("Alice cards are encrypted with her key ");
+		AliceCardsAB = alice.encrypt(aliceCardsB);
+		Various.printBarray(AliceCardsAB);
+
+
+		System.out.println("");
+
+		// Step 3 : Bob -----> Alice
+		System.out.println("Bob decrypt alice five cards ");
+		AliceCardsA = bob.decrypt(AliceCardsAB);
+		Various.printBarray(AliceCardsA);
+		System.out.println("Bob decrypt his five cards ");
+		BobCards = bob.decrypt(bobCardsB);
+		Various.printBarray(BobCards);
+
+		// bob.send(alice);
+
+		System.out.println("");
+
+		// Step 4 : Alice
+		System.out.println("AliceCard before Decipher");
+		Various.printBarray(AliceCardsA);
+		System.out.println("Alice decrypt her five cards ");
+		AliceCards = alice.decrypt(AliceCardsA);
+		Various.printBarray(AliceCards);
+
+		System.out.println("");
+
+
 		alice.printJacobiCardsCheat();
 		System.out.println();
 		alice.printJacobiEcardsCheat();
-		
+
 		/*
 
 		// Step 2 : Bob <----- Alice : Alice won't pick randomly here.

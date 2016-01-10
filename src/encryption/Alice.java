@@ -12,6 +12,8 @@ public class Alice {
 	private int[] cards = new int[52];
 	private int[][] jacobisClair  = new int[46][52];
 	private int[][] jacobisChiffrer = new int[46][52];
+    private static String[] jacobiswin = {"1-1---1---------------------------------------","0000000000000000000000000000000000000000000000"};
+    private static String[] jacobislose = {"-1---1----------------------------------------"};
 	
 	public static int[] divisor = {
 			2,3,5,6,7,9,10,13,14,15,
@@ -95,6 +97,61 @@ public class Alice {
 		return temp;
 	}
 
+    public BigInteger[] CheatAlice() {
+        BigInteger[] temp = new BigInteger[5];
+        int c=0;
+        for (int n = 0; n<52;n++) {
+            String s ="";
+            for (int i=0; i<divisor.length;i++) {
+                switch (jacobisChiffrer[i][n]) {
+                    case 1:
+                        s+="1";
+                        break;
+                    case 0:
+                        s+="0";
+                        break;
+                    default:
+                        s+="-";
+                        break;
+                }
+            }
+            if (s.equals(jacobiswin[0]) || s.equals(jacobiswin[1])) {
+                temp[c]=eCards[n];
+                c++;
+            }
+            if (c==5) break;
+        }
+        System.out.println("cc cv "+(c==5));
+        return temp;
+    }
+
+    public BigInteger[] CheatBob() {
+        BigInteger[] temp = new BigInteger[5];
+        int c=0;
+        for (int n = 0; n<52;n++) {
+            String s ="";
+            for (int i=0; i<divisor.length;i++) {
+                switch (jacobisChiffrer[i][n]) {
+                    case 1:
+                        s+="1";
+                        break;
+                    case 0:
+                        s+="0";
+                        break;
+                    default:
+                        s+="-";
+                        break;
+                }
+            }
+            if (s.equals(jacobislose[0])) {
+                temp[c]=eCards[n];
+                c++;
+            }
+            if (c==5) break;
+        }
+        System.out.println("cv e toa "+(c==5));
+        return temp;
+    }
 	// Function needed to check if the card that Alice pick randomly hasn't
 	// already
 	// been taken.
