@@ -80,7 +80,9 @@ public class Server extends Thread {
 		while (true) {
 			// System.out.println(bob.getStart());
 			while (bob.getStart()) {
-				pw.println("Standard Game");
+				String game = "";
+				game = (bob.isCheatGame()? "Cheat":"Standard");
+				pw.println(game+" Game");
 				pw.flush();
 				System.out.println("Initializing standard game");
 				pw.println("Prime Number");
@@ -183,18 +185,13 @@ public class Server extends Thread {
 							Player alice = new Player("Alice", 1000, "Je suis Alice", pw, "s", array52, aliceCards);
 							f.showHand(alice.getMypaquet5(), bob.getMypaquet5());
 							bob.setStart(false);
+							break;
 						}
+						break;
 					}
+					break;
 				}
 
-			}
-			if (update.equals("Cheating Game")) {
-				pw.println("Cheating Game");
-				pw.flush();
-			}
-			if (update.equals("Counter Game")) {
-				pw.println("Counter Game");
-				pw.flush();
 			}
 		}
 

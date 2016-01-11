@@ -14,6 +14,7 @@ public class Player {
 	private int cards52[];
 	private int mypaquet5[];
 	private boolean start = false;
+	private boolean cheatGame;
 
 	Player(String name, int money, String cmd, PrintWriter pw, String type, int[] cards52, int[] mypaquet5) {
 		super();
@@ -24,7 +25,15 @@ public class Player {
 		this.type = type;
 		this.cards52 = cards52;
 		this.mypaquet5 = mypaquet5;
+		this.cheatGame = false;
+	}
 
+	public boolean isCheatGame() {
+		return cheatGame;
+	}
+
+	public void setCheatGame(boolean cheatGame) {
+		this.cheatGame = cheatGame;
 	}
 
 	public String getName() {

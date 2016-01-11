@@ -14,6 +14,7 @@ public class Client {
 	static final int port = 8080;
 	public static Player alice;
 	public static Alice aliceEnc;
+	public static boolean cheatGame;
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		String serverName;
@@ -63,8 +64,13 @@ public class Client {
 		while (true) {
 			while ((update = br.readLine()) != null) {
 				if (update.equals("Standard Game")) {
-					System.out.println("Standard Game initialized");
-					Various.waitFor(update, br, "Prime Number");
+					cheatGame = false;
+				} else {
+					cheatGame = true;
+				}
+
+					System.out.println(cheatGame==false ? "Standard Game initialized":"Cheat Game initialized");
+				Various.waitFor(update, br, "Prime Number");
 					// Prime Number
 					while ((update = br.readLine()) != null) {
 						aliceEnc = new Alice(new BigInteger(update));
@@ -90,21 +96,22 @@ public class Client {
 							System.out.println("Encrypted Cards received");
 							aliceEnc.shuffle();
 
-							for (int i = 0 ; i < Alice.divisor.length; i++){
-								aliceEnc.jacobiSymbolCardsCheat(i);
-								aliceEnc.jacobiSymbolEcardsCheat(i);
+							if (cheatGame) {
+								for (int i = 0; i < Alice.divisor.length; i++) {
+									aliceEnc.jacobiSymbolCardsCheat(i);
+									aliceEnc.jacobiSymbolEcardsCheat(i);
+								}
+								aliceEnc.printJacobiCardsCheat();
+								System.out.println();
+								aliceEnc.printJacobiEcardsCheat();
 							}
 
-							aliceEnc.printJacobiCardsCheat();
-							System.out.println();
-							aliceEnc.printJacobiEcardsCheat();
-
-
 							System.out.println("Alice pick her five cards ");
-							BigInteger[] aliceCardsB = aliceEnc.CheatAlice();
+							BigInteger[] aliceCardsB = (cheatGame==true? aliceEnc.CheatAlice():aliceEnc.randomPick());
 							Various.printBarray(aliceCardsB);
 							System.out.println("Alice pick bob five cards ");
-							BigInteger[] bobCardsB = aliceEnc.CheatBob();
+							BigInteger[] bobCardsB = (cheatGame==true? aliceEnc.CheatBob():aliceEnc.randomPick());
+
 							Various.printBarray(bobCardsB);
 							System.out.println("Alice cards are encrypted with her key ");
 							BigInteger[] AliceCardsAB = aliceEnc.encrypt(aliceCardsB);
@@ -191,20 +198,15 @@ public class Client {
 									frame2.showHand(alice.getMypaquet5(), bob.getMypaquet5());
 									bob.setStart(false);
 									System.out.println("Ends");
+									break;
 								}
+								break;
 							}
+							break;
 						}
-
+						break;
 					}
-				}
-				if (update.equals("Cheating Game")) {
-					pw.println("Cheating Game");
-					pw.flush();
-				}
-				if (update.equals("Counter Game")) {
-					pw.println("Counter Game");
-					pw.flush();
-				}
+				break;
 			}
 		}
 

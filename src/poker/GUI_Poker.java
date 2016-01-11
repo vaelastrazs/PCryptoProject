@@ -233,6 +233,17 @@ public class GUI_Poker extends JFrame implements ActionListener {
 			}
 		});
 
+		cheat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				// System.out.println(p.getName() + " start : " +p.getStart());
+				p.setCheatGame(true);
+				p.setStart(true);
+				// System.out.println(p.getName() + " start : " +p.getStart());
+			}
+		});
+
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
